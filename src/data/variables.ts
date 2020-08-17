@@ -9,7 +9,7 @@ export default <VariableSet[]>[
         },
         variables: {
             protocol: 'HTTP',
-            host: 'localhost',
+            host: 'localhost(WEB)',
             token: 'bearer("MY TOKEN")'
         }
     },
