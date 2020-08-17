@@ -1,10 +1,10 @@
 module.exports = {
   pwa: {
     name: 'Posteçî',
-    themeColor: '#4A90E2',
-    msTileColor: '#9013fe',
+    themeColor: '#ffffff',
+    msTileColor: '#ffffff',
     manifestOptions: {
-      background_color: '#4A90E2'
+      background_color: '#ffffff'
     },
     display: 'standalone',
     scope: "/posteci/"

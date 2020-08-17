@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/posteci/css/app.1d9af81a.css"
   },
   {
-    "revision": "c34e7c2942ae70c1228eb62348dc3a21",
+    "revision": "099547d64a96aab625953cab55ea3a1e",
     "url": "/posteci/index.html"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/posteci/js/chunk-vendors.9c54ed43.js"
   },
   {
-    "revision": "d196a5cdf46e6cedbe1114fc8909324e",
+    "revision": "21be4f685a083c0bdca3055a5f61876e",
     "url": "/posteci/manifest.json"
   },
   {
