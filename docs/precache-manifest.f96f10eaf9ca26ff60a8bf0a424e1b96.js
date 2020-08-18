@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "eb670a47256d8236dbea",
-    "url": "/posteci/css/app.6ed853cc.css"
+    "revision": "bf79986dc84c2479c1ab",
+    "url": "/posteci/css/app.93bb3440.css"
   },
   {
-    "revision": "9f4e479aec1fe56e6fa8ac6aad156a8b",
+    "revision": "1ed0fa2bab4ba9ae4904a6a0ee816a86",
     "url": "/posteci/index.html"
   },
   {
-    "revision": "eb670a47256d8236dbea",
-    "url": "/posteci/js/app.94b1efa4.js"
+    "revision": "bf79986dc84c2479c1ab",
+    "url": "/posteci/js/app.de323fb2.js"
   },
   {
     "revision": "fe1ba77b76501ce6e7c0",
