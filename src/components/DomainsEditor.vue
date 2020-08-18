@@ -1,14 +1,13 @@
 <script lang="ts">
 import ActionLink from '@/components/ActionLink.vue';
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import Toolbar from '@/components/Toolbar.vue';
 import HttpRequest from '@/model/httpRequest';
 import DomainEditor from '@/components/DomainEditor.vue';
 import Domain from '@/model/domain';
 
 @Component({
   name: 'Domains',
-  components: {DomainEditor, Toolbar, ActionLink}
+  components: {DomainEditor, ActionLink}
 })
 export default class DomainsEditor extends Vue {
 
@@ -40,7 +39,7 @@ export default class DomainsEditor extends Vue {
 <template>
   <div class="domains">
     <h4 @click="clearSelect">Domains</h4>
-    <Toolbar/>
+    <slot></slot>
     <div class="list">
       <DomainEditor
           v-for="(domain, index) in value"
