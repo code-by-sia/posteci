@@ -102,6 +102,9 @@ export default class DomainEditor extends Vue {
 
     .action {
       visibility: hidden;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
     }
 
     &:hover {

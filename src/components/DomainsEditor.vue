@@ -51,7 +51,7 @@ export default class DomainsEditor extends Vue {
           @delete="deleteDomain"
       />
       <div @click="$emit('onRequestNew')" style="cursor:pointer;">
-        <strong>Create Domain</strong>
+        <strong>Add new domain</strong>
         <span> ➕ </span>
       </div>
     </div>
