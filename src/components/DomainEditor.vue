@@ -22,6 +22,18 @@ export default class DomainEditor extends Vue {
   private open: boolean = false;
   private editMode: boolean = false;
 
+  createRequest() {
+    const newRequest: HttpRequest = {
+      name: 'New Request',
+      method: 'GET',
+      protocol: 'HTTP',
+      headers: [],
+      body: null,
+      path: 'foo.bar'
+    }
+    this.value.requests = [...(this.value.requests), newRequest]
+  }
+
   onToggle() {
     this.open = !this.open
   }
@@ -30,11 +42,12 @@ export default class DomainEditor extends Vue {
 </script>
 <template>
   <section class="domain">
-    <header class="domain-title">
+    <header>
       <i @click="onToggle">🗂</i>
       <input v-if="editMode" type="text" v-model="value.name" @keypress.enter="editMode=false"/>
       <span @click="onToggle" @dblclick="editMode = true" v-else>{{ value.name }}</span>
-      <action-link class="delete" icon="🗑️" @click="$emit('delete', value)"/>
+      <action-link class="action new" icon="📄" @click="createRequest"/>
+      <action-link class="action  delete" icon="🗑️" @click="$emit('delete', value)"/>
     </header>
     <div class="requests" v-if="open">
       <action-link
@@ -55,7 +68,8 @@ export default class DomainEditor extends Vue {
 .domain {
   border-bottom: dotted thin #efefef;
 
-  &-title {
+  header {
+    line-height: 2em;
     cursor: pointer;
     height: 32px;
     margin: 0;
@@ -67,12 +81,12 @@ export default class DomainEditor extends Vue {
     i {
       font-style: normal;
       width: 24px;
-      margin: 5px;
+      margin-left: 12px;
+      margin-right: 4px;
     }
 
     input, span {
       flex: 1;
-      padding: 5px;
       font-size: 14px;
 
       &:not(focus) {
@@ -81,16 +95,17 @@ export default class DomainEditor extends Vue {
     }
 
     input {
+      padding: 5px;
       border-radius: 4px;
       border: solid 2px #1f5ecc;
     }
 
-    .delete {
+    .action {
       visibility: hidden;
     }
 
     &:hover {
-      .delete {
+      .action {
         visibility: visible;
       }
     }

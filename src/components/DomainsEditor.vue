@@ -10,7 +10,7 @@ import Domain from '@/model/domain';
   name: 'Domains',
   components: {DomainEditor, Toolbar, ActionLink}
 })
-export default class App extends Vue {
+export default class DomainsEditor extends Vue {
 
   ui: any = {selected: null}
 
@@ -50,6 +50,10 @@ export default class App extends Vue {
           @select="selectRequest"
           @delete="deleteDomain"
       />
+      <div @click="$emit('onRequestNew')" style="cursor:pointer;">
+        <strong>Create Domain</strong>
+        <span> ➕ </span>
+      </div>
     </div>
   </div>
 </template>
