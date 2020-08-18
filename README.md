@@ -1,4 +1,4 @@
-# posteci
+# Posteçî (mailman / mainwoman in Kurdish)
 
 ## Project setup
 ```
