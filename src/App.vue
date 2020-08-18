@@ -3,9 +3,6 @@ import {Component, Vue} from 'vue-property-decorator'
 import RequestEditor from '@/components/RequestEditor.vue'
 import Domains from '@/components/DomainsEditor.vue'
 import Dimensions from '@/components/DimensionsEditor.vue'
-import testVariableSets from './data/variables'
-import testDomains from './data/domains'
-import testDimensions from './data/dimensions'
 import HttpRequest from '@/model/httpRequest'
 import VariableSet from '@/model/variableSet'
 import VariableSetEditor from '@/components/VariableSetEditor.vue'
@@ -17,6 +14,8 @@ import Toolbar from '@/components/Toolbar.vue';
 import PreferencesDialog from '@/components/PreferencesDialog.vue';
 import LoadDataDialog from '@/components/LoadDataDialog.vue';
 import SaveDataDialog from '@/components/SaveDataDialog.vue';
+import PosteciFile from './model/posteci/file'
+import Dimension from '@/model/dimension';
 
 @Component({
   components: {
@@ -31,12 +30,12 @@ import SaveDataDialog from '@/components/SaveDataDialog.vue';
   },
 })
 export default class App extends Vue {
-  dimensions = testDimensions
-  domains = testDomains
+  dimensions: Dimension[] = []
+  domains: Domain[] = []
 
   request: HttpRequest | null = null
 
-  environment: Environment = new Environment(testVariableSets)
+  environment: Environment = new Environment()
 
   dimensionKey: VariableSetKey = {}
 
@@ -55,6 +54,26 @@ export default class App extends Vue {
 
   dialog: string = this.dialogs.HIDE
   readyToShow: boolean = false
+
+  loadData(file: PosteciFile) {
+    this.dimensions = file.data.dimensions
+    this.domains = file.data.domains
+    this.environment = new Environment(file.data.variableSets)
+  }
+
+  saveData(fn:any) {
+    fn.commit( {
+      metadata: {
+        version: 1,
+        ui: {}
+      },
+      data: {
+        dimension: JSON.parse(JSON.stringify(this.dimensions)),
+        domains: JSON.parse(JSON.stringify(this.domains)),
+        variableSets: this.environment.exportVariableSets()
+      }
+    })
+  }
 
   onFilterKetChange(newKey: VariableSetKey) {
     this.variableSet = this.environment.findOrCreate(newKey)
@@ -102,8 +121,8 @@ export default class App extends Vue {
       <div class="dialogs" v-if="dialog!== dialogs.HIDE" @click.self="readyToShow=false">
         <transition name="bounce" @after-leave="dialog = dialogs.HIDE">
           <preferences-dialog v-if="dialog === dialogs.PREFERENCES && readyToShow" @close="hideDialog"/>
-          <load-data-dialog v-if="dialog === dialogs.LOAD && readyToShow" @close="hideDialog"/>
-          <save-data-dialog v-if="dialog === dialogs.SAVE && readyToShow" @close="hideDialog"/>
+          <load-data-dialog v-if="dialog === dialogs.LOAD && readyToShow" @close="hideDialog" @load-data="loadData"/>
+          <save-data-dialog v-if="dialog === dialogs.SAVE && readyToShow" @close="hideDialog" @save-data="saveData"/>
         </transition>
       </div>
     </transition>
@@ -195,13 +214,16 @@ html, body, #app {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 100px;
+    padding: 128px 0;
     z-index: 1000;
     display: flex;
     justify-content: center;
+    align-items: center;
 
     > div {
       width: 100%;
+      max-width: 1024px;
+      min-height: 500px;
     }
 
   }

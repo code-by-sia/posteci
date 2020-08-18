@@ -27,6 +27,10 @@ export default class Environment {
     constructor(private variableSets: VariableSet[] = []) {
     }
 
+    exportVariableSets() {
+        return JSON.parse(JSON.stringify(this.variableSets))
+    }
+
     findOrCreate(filter: VariableSetKey): VariableSet {
         const item = this.find(filter)
         return item || this.create(filter);
