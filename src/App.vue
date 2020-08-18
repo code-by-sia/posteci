@@ -2,7 +2,7 @@
 import {Component, Vue} from 'vue-property-decorator'
 import RequestEditor from '@/components/RequestEditor.vue'
 import Domains from '@/components/DomainsEditor.vue'
-import Dimensions from '@/components/DimensionsEditor.vue'
+import DimensionsEditor from '@/components/DimensionsEditor.vue'
 import HttpRequest from '@/model/httpRequest'
 import VariableSet from '@/model/variableSet'
 import VariableSetEditor from '@/components/VariableSetEditor.vue'
@@ -23,9 +23,9 @@ import Dimension from '@/model/dimension';
     LoadDataDialog,
     PreferencesDialog,
     Toolbar,
+    DimensionsEditor,
     VariableSetEditor,
     RequestEditor,
-    Dimensions,
     Domains
   },
 })
@@ -40,6 +40,7 @@ export default class App extends Vue {
   dimensionKey: VariableSetKey = {}
 
   variableEditorVisible: boolean = false
+  dimensiobEditMode: boolean = false
 
   variableSet: VariableSet | null = null
 
@@ -61,8 +62,8 @@ export default class App extends Vue {
     this.environment = new Environment(file.data.variableSets)
   }
 
-  saveData(fn:any) {
-    fn.commit( {
+  saveData(fn: any) {
+    fn.commit({
       metadata: {
         version: 1,
         ui: {}
@@ -83,6 +84,10 @@ export default class App extends Vue {
   pickRequest(request: HttpRequest) {
     this.variableSet = null
     this.request = request
+  }
+
+  editDimensions() {
+    this.dimensiobEditMode = true
   }
 
   showVariableEditor() {
@@ -134,9 +139,10 @@ export default class App extends Vue {
       />
     </domains>
     <div class="container">
-      <dimensions
+      <dimensions-editor
           v-model="dimensions"
-          @showHide="showVariableEditor"
+          @show-hide="showVariableEditor"
+          @edit-dimensions="editDimensions"
           @selection-changed="onFilterKetChange"
       />
       <variable-set-editor
