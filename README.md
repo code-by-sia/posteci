@@ -23,5 +23,5 @@ npm run build
 npm run test:unit
 ```
 
-### fun fact:
+### Fun fact:
 Posteçî(post-å-chi) refers to mainman or mailwomen in Kurdish language.
