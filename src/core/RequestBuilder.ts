@@ -153,11 +153,13 @@ export default class RequestBuilder {
 
         console.log({url, method, headers})
 
-        return fetch(url, hasBody(method) ? {
-            method, headers, redirect: 'follow'
-        } : {
-            method, headers, body, redirect: 'follow'
-        })
+        const options:any = {
+            method,
+            headers,
+            mode:'cors',
+            redirect: 'follow'}
+
+        return fetch(url, hasBody(method) ? options : {...options, body})
     }
 
     private async buildVariables() {

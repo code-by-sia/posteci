@@ -68,16 +68,14 @@
         display: flex;
 
         .header {
-            background: #a80000;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 50px;
-
+            width: 32px;
+            border-right: dotted thin #eeeeee;
             div.title {
-                color: white;
                 width: 100px;
-                height: 20px;
+                height: 16px;
                 transform: rotate(270deg);
                 font-weight: 700;
             }
