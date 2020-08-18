@@ -1,4 +1,7 @@
-# Posteçî (mailman / mainwoman in Kurdish)
+# Posteçî 
+
+<img src="demo.gif" />
+
 
 ## Project setup
 ```
@@ -20,4 +23,5 @@ npm run build
 npm run test:unit
 ```
 
-<img src="demo.gif" />
+### fun fact:
+Posteçî(post-å-chi) refers to mainman or mailwomen in Kurdish language.
