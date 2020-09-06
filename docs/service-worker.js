@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/posteci/precache-manifest.f96f10eaf9ca26ff60a8bf0a424e1b96.js"
+  "/posteci/precache-manifest.e642ac36887c25050abd681e32db50d0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "posteci"});
