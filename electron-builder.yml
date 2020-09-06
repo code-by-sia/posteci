@@ -1,0 +1,6 @@
+appId: cc.siamand.posteci
+productName: Posteci
+forceCodeSigning: false
+mac:
+  icon: ./build/icon.icons
+  category: public.app-category.developer-tools

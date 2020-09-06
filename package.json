@@ -2,6 +2,16 @@
   "name": "posteci",
   "version": "0.2.8",
   "private": true,
+  "description": "An opensource RestAPI client.",
+  "author": {
+    "name": "Siamand",
+    "email": "me@siamand.cc",
+    "url": "https://siamand.cc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiamandMaroufi/posteci"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -42,27 +52,5 @@
   ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel"
-  },
-  "build": {
-    "appId": "cc.siamand.posteci",
-    "productName": "Posteci",
-    "copyright": "Copyright © 2020 ${author}",
-    "mac": {
-      "icon": "./public/icons/mac-512x512.icns",
-      "category": "public.app-category.developer-tools"
-    },
-    "win": {
-      "icon": "./public/icons/android-chrome-256x256.png"
-    },
-    "files": [
-      "./build/**/*",
-      "./dist/**/*",
-      "./node_modules/**/*",
-      "./public/**/*",
-      "*.js"
-    ],
-    "directories": {
-      "buildResources": "public"
-    }
   }
 }
