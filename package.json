@@ -1,6 +1,6 @@
 {
   "name": "posteci",
-  "version": "0.2.8",
+  "version": "1.0.0",
   "private": true,
   "description": "An opensource RestAPI client.",
   "author": {
