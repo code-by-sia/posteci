@@ -50,7 +50,7 @@ export default class RequestEditor extends Vue {
           {{response.status}}
         </div>
       </div>
-      <pre>{{response}}</pre>
+      <pre>{{response.body}}</pre>
     </div>
   </div>
   <div class="request-editor-empty" v-else>

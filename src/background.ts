@@ -42,7 +42,7 @@ function createWindow() {
   })
 }
 app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
-
+app.commandLine.appendSwitch("disable-http-cache");
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
