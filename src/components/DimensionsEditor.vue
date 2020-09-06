@@ -1,25 +1,25 @@
 <script lang="ts">
-import {Component, Prop, Vue} from 'vue-property-decorator';
-import Dimension from '@/model/dimension';
-import dimensions from '@/data/dimensions';
-import VariableSetKey from '@/model/variableSetKey';
-import ActionLink from '@/components/ActionLink.vue';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Dimension from "@/model/dimension";
+import dimensions from "@/data/dimensions";
+import VariableSetKey from "@/model/variableSetKey";
+import ActionLink from "@/components/ActionLink.vue";
 
 @Component({
-  name: 'dimensions-editor',
+  name: "dimensions-editor",
   components: {
-    ActionLink
-  }
+    ActionLink,
+  },
 })
 export default class DimensionsEditor extends Vue {
   @Prop()
   private value!: Dimension[];
 
-  filterKey: VariableSetKey = {}
+  filterKey: VariableSetKey = {};
 
   beforeMount() {
     for (let dimension of dimensions) {
-      this.filterKey[dimension.name] = '*';
+      this.filterKey[dimension.name] = "*";
     }
   }
 
@@ -28,7 +28,7 @@ export default class DimensionsEditor extends Vue {
   }
 
   private updateSelection() {
-    this.$emit('selection-changed', this.filterKey)
+    this.$emit("selection-changed", this.filterKey);
   }
 }
 </script>
@@ -38,27 +38,24 @@ export default class DimensionsEditor extends Vue {
       <div class="title">Dimensions</div>
     </div>
     <div class="tools">
-      <action-link @click="$emit('show-hide')" icon="🧭" value="Show/hide vars"/>
-      <action-link @click="$emit('edit-dimensions')" icon="📈" value="Edit dimensions"/>
-
+      <action-link @click="$emit('show-hide')" icon="🧭" value="Show/hide vars" />
+      <action-link @click="$emit('edit-dimensions')" icon="📈" value="Edit dimensions" />
     </div>
     <div class="dimensions">
-      <div v-for="dimension in value" class="dimension">
+      <div v-for="dimension in value" :key="dimension.name" class="dimension">
         <label>{{ dimension.name }}</label>
         <label>
           <select v-model="filterKey[dimension.name]" @change="updateSelection">
-            <option value="*"> &times; ALL &times;</option>
-            <option v-for="(dimensionOption,index) in dimension.values"
-                    :value="dimensionOption"
-                    :key="index"
-            >
-              {{ dimensionOption }}
-            </option>
+            <option value="*">&times; ALL &times;</option>
+            <option
+              v-for="(dimensionOption,index) in dimension.values"
+              :value="dimensionOption"
+              :key="index"
+            >{{ dimensionOption }}</option>
           </select>
         </label>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -113,15 +110,17 @@ export default class DimensionsEditor extends Vue {
         color: #111;
         font-weight: bold;
         text-transform: uppercase;
-        font-size: .7em;
+        font-size: 0.7em;
       }
 
       select {
         min-width: 128px;
         text-transform: uppercase;
-        padding: 4px;
+        padding: 5px;
+        border: solid thin #ccc;
+        border-radius: 4px;
+        background: linear-gradient(45deg, #fff, #eee);
       }
-
     }
   }
 }
