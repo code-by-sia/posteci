@@ -1,31 +1,32 @@
 <script lang="ts">
-import DialogBase from '@/components/Dialog.vue';
-import {Component, Vue} from 'vue-property-decorator';
-import PosteciFile from '@/model/posteci/file'
+import DialogBase from "@/components/Dialog.vue";
+import { Component, Vue } from "vue-property-decorator";
+import PosteciFile from "@/model/posteci/file";
 
 @Component({
-  name: 'save-data-dialog',
-  components: {DialogBase}
+  name: "save-data-dialog",
+  components: { DialogBase },
 })
 export default class SaveDataDialog extends Vue {
   saveToLocalStorage() {
-    this.$emit('save-data', {commit: (data:PosteciFile) => localStorage.setItem('posteci-data', JSON.stringify(data))})
-    this.$emit('close')
+    this.$emit("save-data", {
+      commit: (data: PosteciFile) =>
+        localStorage.setItem("posteci-data", JSON.stringify(data)),
+    });
+    this.$emit("close");
   }
 }
 </script>
 <template>
-  <dialog-base icon="📮" title="Save data" class="save-data" @close="$emit('close')">
+  <dialog-base icon="💾" title="Save data" class="save-data" @close="$emit('close')">
     <section class="section">
       TODO: NOT IMPLEMENTED YET!
-
       <button @click="saveToLocalStorage">
         Save to Local Storage
         <i>🔬</i>
       </button>
     </section>
   </dialog-base>
-
 </template>
 <style scopped lang="scss">
 .save-data {
@@ -55,18 +56,21 @@ export default class SaveDataDialog extends Vue {
     font-weight: bold;
     color: #444;
     text-shadow: 1px 1px #fff;
-    box-shadow: 0 0 5px #dedede, 0 1px 0px #d0d0d0, 0 2px 0px #eee, 0 -1px 0px #fff inset, 0 -2px 1px #f5f5f5 inset;
+    box-shadow: 0 0 5px #dedede, 0 1px 0px #d0d0d0, 0 2px 0px #eee,
+      0 -1px 0px #fff inset, 0 -2px 1px #f5f5f5 inset;
     border-radius: 5px;
 
     transition: 0.5s;
 
     &:hover {
-      box-shadow: 0 0 5px #fff, 0 1px 0px #d0d0d0, 0 2px 0px #eee, 0 -1px 0px #f6f6f6 inset, 0 -2px 1px #f5f5f5 inset;
+      box-shadow: 0 0 5px #fff, 0 1px 0px #d0d0d0, 0 2px 0px #eee,
+        0 -1px 0px #f6f6f6 inset, 0 -2px 1px #f5f5f5 inset;
     }
 
     &:active {
       color: #040467;
-      box-shadow: 0 0 5px #fff, 0 2px 5px #999, 0 2px 0px #eee, 0 -1px 0px #f6f6f6 inset, 0 -2px 1px #f5f5f5 inset;
+      box-shadow: 0 0 5px #fff, 0 2px 5px #999, 0 2px 0px #eee,
+        0 -1px 0px #f6f6f6 inset, 0 -2px 1px #f5f5f5 inset;
     }
 
     i {

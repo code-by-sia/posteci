@@ -244,7 +244,6 @@ body,
   .request-editor,
   .variable-set-editor {
     flex: 1;
-    border-top: dashed thin #ccc;
   }
 
   .container {
