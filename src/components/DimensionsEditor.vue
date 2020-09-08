@@ -65,7 +65,7 @@ export default class DimensionsEditor extends Vue {
   height: 110px;
   padding: 0;
   display: flex;
-  border: solid thin #ccc;
+  border-bottom: solid thin #ccc;
 
   .header {
     display: flex;
