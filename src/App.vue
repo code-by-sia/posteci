@@ -95,6 +95,10 @@ export default class App extends Vue {
     this.dimensiobEditMode = true;
   }
 
+  createDimension() {
+    this.dimensions.push({ name: "new-dimension", values: [] });
+  }
+
   showVariableEditor() {
     this.variableEditorVisible = !this.variableEditorVisible;
     this.variableSet = this.environment.findOrCreate(this.dimensionKey);
@@ -154,8 +158,12 @@ export default class App extends Vue {
 </script>
 <template>
   <div id="app">
-    <transition name="fade" @after-enter="readyToShow=true">
-      <div class="dialogs" v-if="dialog!== dialogs.HIDE" @click.self="readyToShow=false">
+    <transition name="fade" @after-enter="readyToShow = true">
+      <div
+        class="dialogs"
+        v-if="dialog !== dialogs.HIDE"
+        @click.self="readyToShow = false"
+      >
         <transition name="bounce" @after-leave="dialog = dialogs.HIDE">
           <preferences-dialog
             v-if="dialog === dialogs.PREFERENCES && readyToShow"
@@ -174,7 +182,11 @@ export default class App extends Vue {
         </transition>
       </div>
     </transition>
-    <domains v-model="domains" @onRequestSelect="pickRequest" @onRequestNew="createDomain">
+    <domains
+      v-model="domains"
+      @onRequestSelect="pickRequest"
+      @onRequestNew="createDomain"
+    >
       <Toolbar
         @load-data="showDialog(dialogs.LOAD)"
         @save-data="showDialog(dialogs.SAVE)"
@@ -187,13 +199,18 @@ export default class App extends Vue {
         @show-hide="showVariableEditor"
         @edit-dimensions="editDimensions"
         @selection-changed="onFilterKetChange"
+        @create-new="createDimension"
       />
       <variable-set-editor
         v-if="variableEditorVisible && variableSet"
         v-model="variableSet"
         @change="updateVariableSet"
       />
-      <request-editor v-model="request" :response="response" @send="onSend(request)" />
+      <request-editor
+        v-model="request"
+        :response="response"
+        @send="onSend(request)"
+      />
     </div>
   </div>
 </template>

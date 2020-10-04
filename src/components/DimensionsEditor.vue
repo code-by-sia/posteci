@@ -38,6 +38,20 @@ export default class DimensionsEditor extends Vue {
   saveChanges() {
     this.editMode = false;
   }
+  createNew() {
+    this.$emit("create-new");
+  }
+  updateDimension(d: Dimension) {
+    const oldName = (<any>d).oldName || d.name;
+    const current = this.value
+      .map((n) => {
+        if (n.name == oldName) return { name: d.name, values: d.values };
+        return { name: n.name, values: n.values.map((_) => _) };
+      })
+      .filter((n) => n.name.trim() != "");
+
+    this.$emit("input", current);
+  }
 }
 </script>
 <template>
@@ -60,15 +74,15 @@ export default class DimensionsEditor extends Vue {
       />
       <action-link
         v-if="editMode"
-        @click="saveChanges"
-        icon="💾"
-        value="Save Changes"
+        icon="➕"
+        value="Create New"
+        @click="createNew"
       />
       <action-link
         v-if="editMode"
-        @click="editMode = false"
-        icon="🗑️"
-        value="Discard Changes"
+        @click="saveChanges"
+        icon="↩️"
+        value="End Edit"
       />
     </div>
     <div class="dimensions" :class="{ edit: editMode }">
@@ -79,9 +93,9 @@ export default class DimensionsEditor extends Vue {
         :key="dimension.name"
         :dimension="dimension"
         :edit-mode="editMode"
+        @update="updateDimension"
         @change="updateSelection"
       />
-      <action-link v-if="editMode" icon="➕" value="Create New" />
     </div>
   </div>
 </template>

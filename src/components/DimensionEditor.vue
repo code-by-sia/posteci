@@ -1,6 +1,6 @@
 <script lang="ts">
 import Dimension from "@/model/dimension";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 @Component({
   name: "dimension-editor",
@@ -15,6 +15,19 @@ export default class DimensionEditor extends Vue {
   @Prop({ default: () => false })
   private editMode!: boolean;
 
+  dimensionChange(n) {
+    this.$emit("update", {
+      name: this.dimension.name,
+      values: n.target.value.split("\n"),
+    });
+  }
+  onDimensionNameChanged(n) {
+    this.$emit("update", {
+      oldName: this.dimension.name,
+      name: n.target.value,
+      values: this.dimension.values,
+    });
+  }
   updateSelection(e) {
     this.$emit("input", e.target.value);
     this.$emit("change");
@@ -24,7 +37,7 @@ export default class DimensionEditor extends Vue {
 <template>
   <div class="dimension-editor">
     <label v-if="!editMode">{{ dimension.name }}</label>
-    <input v-else v-model="dimension.name" />
+    <input v-else :value="dimension.name" @change="onDimensionNameChanged" />
     <label v-if="!editMode">
       <select value="value" @change="updateSelection">
         <option value="*">*</option>
@@ -37,7 +50,11 @@ export default class DimensionEditor extends Vue {
         </option>
       </select>
     </label>
-    <textarea v-else :value="dimension.values.join('\n')"></textarea>
+    <textarea
+      v-else
+      :value="dimension.values.join('\n')"
+      @change="dimensionChange"
+    ></textarea>
   </div>
 </template>
 <style lang="scss" scoped>
