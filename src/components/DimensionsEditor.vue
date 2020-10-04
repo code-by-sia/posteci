@@ -4,11 +4,13 @@ import Dimension from "@/model/dimension";
 import dimensions from "@/data/dimensions";
 import VariableSetKey from "@/model/variableSetKey";
 import ActionLink from "@/components/ActionLink.vue";
+import DimensionEditor from "@/components/DimensionEditor.vue";
 
 @Component({
   name: "dimensions-editor",
   components: {
     ActionLink,
+    DimensionEditor,
   },
 })
 export default class DimensionsEditor extends Vue {
@@ -16,6 +18,8 @@ export default class DimensionsEditor extends Vue {
   private value!: Dimension[];
 
   filterKey: VariableSetKey = {};
+
+  editMode = false;
 
   beforeMount() {
     for (let dimension of dimensions) {
@@ -30,6 +34,10 @@ export default class DimensionsEditor extends Vue {
   private updateSelection() {
     this.$emit("selection-changed", this.filterKey);
   }
+
+  saveChanges() {
+    this.editMode = false;
+  }
 }
 </script>
 <template>
@@ -38,23 +46,42 @@ export default class DimensionsEditor extends Vue {
       <div class="title">Dimensions</div>
     </div>
     <div class="tools">
-      <action-link @click="$emit('show-hide')" icon="🧭" value="Show/hide vars" />
-      <action-link @click="$emit('edit-dimensions')" icon="📈" value="Edit dimensions" />
+      <action-link
+        v-if="!editMode"
+        @click="$emit('show-hide')"
+        icon="🧭"
+        value="Show/hide vars"
+      />
+      <action-link
+        v-if="!editMode"
+        @click="editMode = true"
+        icon="📈"
+        value="Edit dimensions"
+      />
+      <action-link
+        v-if="editMode"
+        @click="saveChanges"
+        icon="💾"
+        value="Save Changes"
+      />
+      <action-link
+        v-if="editMode"
+        @click="editMode = false"
+        icon="🗑️"
+        value="Discard Changes"
+      />
     </div>
-    <div class="dimensions">
-      <div v-for="dimension in value" :key="dimension.name" class="dimension">
-        <label>{{ dimension.name }}</label>
-        <label>
-          <select v-model="filterKey[dimension.name]" @change="updateSelection">
-            <option value="*">*</option>
-            <option
-              v-for="(dimensionOption,index) in dimension.values"
-              :value="dimensionOption"
-              :key="index"
-            >{{ dimensionOption }}</option>
-          </select>
-        </label>
-      </div>
+    <div class="dimensions" :class="{ edit: editMode }">
+      <dimension-editor
+        class="dimension"
+        v-for="dimension in value"
+        v-model="filterKey[dimension.name]"
+        :key="dimension.name"
+        :dimension="dimension"
+        :edit-mode="editMode"
+        @change="updateSelection"
+      />
+      <action-link v-if="editMode" icon="➕" value="Create New" />
     </div>
   </div>
 </template>
@@ -100,62 +127,30 @@ export default class DimensionsEditor extends Vue {
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 7px 0;
+    &.edit {
+      flex-direction: row;
 
-    .dimension {
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      margin-left: 10px;
-
-      label {
-        color: #111;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 0.7em;
+      .dimension {
+        border: solid thin #aaa;
+        box-shadow: 1px 1px 0 0 #ddd;
+        border-radius: 2px;
+        overflow: hidden;
       }
 
-      select {
-        min-width: 128px;
-        background-color: white;
-        border: thin solid #ccc;
-        border-radius: 4px;
-        display: inline-block;
-        font: inherit;
+      textarea {
+        flex: 1;
         line-height: 1.5em;
-        padding: 0.5em 3.5em 0.5em 1em;
-        margin: 0;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-
-        background-image: linear-gradient(45deg, transparent 50%, gray 50%),
-          linear-gradient(135deg, gray 50%, transparent 50%),
-          linear-gradient(to right, #ccc, #ccc);
-        background-position: calc(100% - 15px) calc(1em + 2px),
-          calc(100% - 10px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
-        background-size: 5px 5px, 5px 5px, 1px 1.5em;
-        background-repeat: no-repeat;
-
+        padding: 4px 8px;
+        resize: none;
+        border: none;
+      }
+      input {
+        border: none;
+        border-bottom: solid thin #eee;
+        line-height: 2em;
+        text-indent: 0.5em;
+        width: 100%;
         text-transform: uppercase;
-
-        &:focus {
-          background-image: linear-gradient(45deg, #555 50%, transparent 50%),
-            linear-gradient(135deg, transparent 50%, #555 50%),
-            linear-gradient(to right, #ccc, #ccc);
-          background-position: calc(100% - 10px) 1em, calc(100% - 15px) 1em,
-            calc(100% - 2.5em) 0.5em;
-          background-size: 5px 5px, 5px 5px, 1px 1.5em;
-          background-repeat: no-repeat;
-          border-color: #444;
-          outline: 0;
-        }
-
-        &:-moz-focusring {
-          color: transparent;
-          text-shadow: 0 0 0 #000;
-        }
       }
     }
   }
