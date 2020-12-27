@@ -24,4 +24,4 @@ npm run test:unit
 ```
 
 ### Fun fact:
-Posteçî(post-å-chi) refers to mainman or mailwomen in Kurdish language.
+Posteçî(post-å-chi) refers to mailman or mailwomen in Kurdish language.
