@@ -2,6 +2,7 @@
 import DialogBase from "@/components/Dialog.vue";
 import { Component, Vue } from "vue-property-decorator";
 import PosteciFile from "@/model/posteci/file";
+import { clipboard } from "electron";
 
 @Component({
   name: "save-data-dialog",
@@ -15,15 +16,30 @@ export default class SaveDataDialog extends Vue {
     });
     this.$emit("close");
   }
+
+  copyToClipboard() {
+    this.$emit("save-data", {
+      commit: (data: PosteciFile) => clipboard.writeText(JSON.stringify(data)),
+    });
+    this.$emit("close");
+  }
 }
 </script>
 <template>
-  <dialog-base icon="💾" title="Save data" class="save-data" @close="$emit('close')">
+  <dialog-base
+    icon="💾"
+    title="Save data"
+    class="save-data"
+    @close="$emit('close')"
+  >
     <section class="section">
-      TODO: NOT IMPLEMENTED YET!
       <button @click="saveToLocalStorage">
         Save to Local Storage
         <i>🔬</i>
+      </button>
+      <button @click="copyToClipboard">
+        Copy to Clipboard
+        <i>🧬</i>
       </button>
     </section>
   </dialog-base>
