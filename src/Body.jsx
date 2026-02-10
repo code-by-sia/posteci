@@ -34,7 +34,6 @@ export default function Body() {
         <TabsTrigger value="body" disabled={!req.hasBody}>
           Body
         </TabsTrigger>
-        <TabsTrigger value="pre-req">Pre-Req</TabsTrigger>
       </TabsList>
       <TabsContent value="params">
         <PropertiesTable value={req.params} onChange={req.setParams} />
