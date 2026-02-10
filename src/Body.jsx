@@ -4,7 +4,6 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -12,13 +11,17 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { PropertiesTable } from "@/components/properties-table";
+import { cn } from "@/lib/utils";
+import { useRequest } from "./hooks/requset-context";
 
-const params = [
-  { name: "param1", value: "value1", description: "Description for param1" },
-  { name: "param2", value: "value2", description: "Description for param2" },
-];
+function ActiveHeadersBadge() {
+  const { activeHeaders } = useRequest();
+  return activeHeaders > 0 ? <Badge>{activeHeaders}</Badge> : "";
+}
 
 export default function Body() {
+  const req = useRequest();
+
   return (
     <Tabs defaultValue="params" className="w-full">
       <TabsList variant="line" className="flex">
@@ -26,20 +29,27 @@ export default function Body() {
         <TabsTrigger value="auth">Auth</TabsTrigger>
         <TabsTrigger value="headers">
           Headers
-          <Badge>2</Badge>
+          <ActiveHeadersBadge />
         </TabsTrigger>
-        <TabsTrigger value="body">Body</TabsTrigger>
+        <TabsTrigger value="body" disabled={!req.hasBody}>
+          Body
+        </TabsTrigger>
         <TabsTrigger value="pre-req">Pre-Req</TabsTrigger>
       </TabsList>
       <TabsContent value="params">
-        <PropertiesTable data={params} />
+        <PropertiesTable value={req.params} onChange={req.setParams} />
       </TabsContent>
       <TabsContent value="auth">
         <div className="flex h-full w-full bg-white border rounded-lg shadow-sm">
           <div className="p-3 min-w-2xs">
             <Field className="w-2/3 m-3">
               <FieldLabel>Auth Type</FieldLabel>
-              <Select value="bearer">
+              <Select
+                value={req.auth.type}
+                onValueChange={(value) =>
+                  req.setAuth({ ...req.auth, type: value })
+                }
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -59,32 +69,28 @@ export default function Body() {
         </div>
       </TabsContent>
       <TabsContent value="headers">
-        <PropertiesTable data={params} />
+        <PropertiesTable
+          value={req.headers}
+          onChange={req.setHeaders}
+          withDescription={true}
+        />
       </TabsContent>
+
       <TabsContent value="body">
         <Editor
-          className="shadow-sm rounded-lg overflow-hidden"
+          className={cn(
+            { hidden: !req.hasBody },
+            "shadow-sm rounded-lg overflow-hidden",
+          )}
           height="100%"
           defaultLanguage="json"
-          defaultValue={JSON.stringify(
-            {
-              name: "shadcn",
-              version: "1.0.0",
-              info: {
-                first_name: "shadcn",
-                last_name: "Asdasd",
-              },
-              list: [1, 2, 3, 4],
-            },
-            null,
-            2,
-          )}
+          value={req.body}
+          onChange={req.setBody}
           options={{
             fontSize: 16,
           }}
         />
       </TabsContent>
-      <TabsContent value="pre-req"></TabsContent>
     </Tabs>
   );
 }

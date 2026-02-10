@@ -1,14 +1,13 @@
-import { useState } from "react";
 import { Mail, StampIcon } from "lucide-react";
 import Layout from "./layout";
 import Body from "./Body";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HttpMethodSelector } from "@/components/http-method-selector";
+import { useRequest } from "@/hooks/requset-context";
 
 export function App() {
-  const [method, setMethod] = useState("GET");
-  const [url, setUrl] = useState("http://api.example.com/chat");
+  const req = useRequest();
 
   return (
     <Layout className="p-3 bg-gray-50">
@@ -18,11 +17,11 @@ export function App() {
           User Login
         </h1>
         <div className="p-4 flex w-full items-center  rounded border-2 bg-white gap-2 ">
-          <HttpMethodSelector value={method} onChange={setMethod} />
+          <HttpMethodSelector value={req.method} onChange={req.setMethod} />
           <Input
             className="font-mono"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={req.url}
+            onChange={(e) => req.setUrl(e.target.value)}
           />
           <Button onClick={() => {}}>
             Send
